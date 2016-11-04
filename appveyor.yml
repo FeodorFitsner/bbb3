@@ -6,7 +6,7 @@ clone_folder: C:\projects\2$(GOPATH)
 
 init:
 - ps: |
-    Update-AppveyorBuild -Message "Amazon S3 storage and cache (with nuget 5.0.5)"
+    Update-AppveyorBuild -Message "Google storage and cache (with nuget 6.0.3)"
     Start-sleep -s 1
     Write-Host "appveyor_build_folder: $env:appveyor_build_folder"
     Write-Host "MY_BUILD_DIR: $env:MY_BUILD_DIR"
