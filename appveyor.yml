@@ -1,0 +1,40 @@
+version: 1.0.{build}
+
+clone_folder: C:\projects\2$(GOPATH)
+
+init:
+- ps: |
+    Update-AppveyorBuild -Message "Amazon S3 storage and cache (with nuget 5.0.5)"
+    Start-sleep -s 1
+    Write-Host "appveyor_build_folder: $env:appveyor_build_folder"
+    Write-Host "MY_BUILD_DIR: $env:MY_BUILD_DIR"
+    Write-Host "MY_DIST_DIR: $env:MY_DIST_DIR"
+environment:
+  GOPATH: $(HOMEPATH)\src\project
+  MY_BUILD_DIR: $(appveyor_build_folder)\build
+  MY_DIST_DIR: '%appveyor_build_folder%\${DIST_NAME}'
+  DIST_NAME: dist-aaa
+  
+cache:
+- wxWidgets.7z
+- Appveyor.NUnitLogger.zip
+#- C:\go16
+#- C:\Projects\2\node.zip
+- packages
+install:
+- nuget restore packages.config -PackagesDirectory packages
+build_script:
+- ps: Start-FileDownload https://www.appveyor.com/downloads/Appveyor.NUnitLogger.zip
+- ps: Start-FileDownload 'https://nodejs.org/dist/v6.5.0/node-v6.5.0-darwin-x64.tar.gz' -FileName wxWidgets.7z
+- ps: Push-AppveyorArtifact wxWidgets.7z
+test_script:
+- copy "C:\Projects\2\node.zip" %appveyor_build_folder%
+- mklink /J %appveyor_build_folder%\go16 C:\go16
+- appveyor PushArtifact "C:\Projects\2\products.zip"
+- appveyor PushArtifact "C:\Projects\2\newtonsoft.json.5.0.5.nupkg"
+- ps: Set-Content -Path "$env:appveyor_build_folder\packages\ts.txt" -Value "$(get-date)"
+
+artifacts:
+- path: go16
+- path: node.zip
+- path: README.md
