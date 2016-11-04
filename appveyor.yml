@@ -32,7 +32,7 @@ build_script:
 test_script:
 - mklink /J %appveyor_build_folder%\7zip "C:\Program Files\7-Zip"
 - appveyor PushArtifact products.zip
-- appveyor PushArtifact newtonsoft.json.5.0.5.nupkg
+- appveyor PushArtifact newtonsoft.json.6.0.3.nupkg
 - ps: Set-Content -Path "$env:appveyor_build_folder\packages\ts.txt" -Value "$(get-date)"
 
 artifacts:
