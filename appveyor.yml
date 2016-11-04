@@ -18,8 +18,8 @@ environment:
 cache:
 - wxWidgets.7z
 - Appveyor.NUnitLogger.zip
-#- C:\go16
-#- C:\Projects\2\node.zip
+- C:\Program Files\7-Zip
+- node.zip
 - packages
 install:
 - nuget restore packages.config -PackagesDirectory packages
@@ -28,13 +28,12 @@ build_script:
 - ps: Start-FileDownload 'https://nodejs.org/dist/v6.5.0/node-v6.5.0-darwin-x64.tar.gz' -FileName wxWidgets.7z
 - ps: Push-AppveyorArtifact wxWidgets.7z
 test_script:
-- copy "C:\Projects\2\node.zip" %appveyor_build_folder%
-- mklink /J %appveyor_build_folder%\go16 C:\go16
-- appveyor PushArtifact "C:\Projects\2\products.zip"
-- appveyor PushArtifact "C:\Projects\2\newtonsoft.json.5.0.5.nupkg"
+- mklink /J %appveyor_build_folder%\7zip "C:\Program Files\7-Zip"
+- appveyor PushArtifact products.zip
+- appveyor PushArtifact newtonsoft.json.5.0.5.nupkg
 - ps: Set-Content -Path "$env:appveyor_build_folder\packages\ts.txt" -Value "$(get-date)"
 
 artifacts:
-- path: go16
+- path: 7zip
 - path: node.zip
 - path: README.md
