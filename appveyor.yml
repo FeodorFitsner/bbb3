@@ -7,6 +7,7 @@ image: Visual Studio 2015
 clone_folder: C:\projects\2$(GOPATH)
 
 init:
+- appveyor version
 - ps: |
     Update-AppveyorBuild -Message "Google storage and cache (with nuget 6.0.3)"
     Start-sleep -s 1
