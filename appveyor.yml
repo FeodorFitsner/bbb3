@@ -4,7 +4,7 @@ build_cloud: GCE
 
 image: Visual Studio 2015 - GCE
 
-clone_folder: C:\projects\2$(GOPATH)
+clone_folder: C:\projects\$(GOPATH)
 
 init:
 - ps: |
