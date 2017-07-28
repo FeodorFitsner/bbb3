@@ -2,7 +2,7 @@ version: 1.0.{build}
 
 build_cloud: GCE
 
-image: Visual Studio 2015 - GCE
+#image: Visual Studio 2015 - GCE
 
 clone_folder: C:\projects\$(GOPATH)
 
