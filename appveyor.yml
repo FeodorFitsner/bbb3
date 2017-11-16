@@ -2,10 +2,6 @@ version: 1.0.{build}
 
 build_cloud: GCE
 
-#image: Visual Studio 2015 - GCE
-
-clone_folder: C:\projects\$(GOPATH)
-
 init:
 - ps: |
     Update-AppveyorBuild -Message "Google storage and cache (with nuget 6.0.3)"
@@ -13,27 +9,23 @@ init:
     Write-Host "appveyor_build_folder: $env:appveyor_build_folder"
     Write-Host "MY_BUILD_DIR: $env:MY_BUILD_DIR"
     Write-Host "MY_DIST_DIR: $env:MY_DIST_DIR"
-environment:
-  GOPATH: $(HOMEPATH)\src\project
-  MY_BUILD_DIR: $(appveyor_build_folder)\build
-  MY_DIST_DIR: '%appveyor_build_folder%\${DIST_NAME}'
-  DIST_NAME: dist-aaa
-  
+
 cache:
 - wxWidgets.7z
 - Appveyor.NUnitLogger.zip
-- C:\Program Files\7-Zip
 - node.zip
 - packages
+
 install:
 - nuget restore packages.config -PackagesDirectory packages
+
 build_script:
 - ps: Start-FileDownload https://www.appveyor.com/downloads/Appveyor.NUnitLogger.zip
 - ps: Start-FileDownload 'https://nodejs.org/dist/v6.5.0/node-v6.5.0-darwin-x64.tar.gz' -FileName wxWidgets.7z
 - ps: Push-AppveyorArtifact wxWidgets.7z
 - fsutil file createnew bigfile 2300000000
+
 test_script:
-- mklink /J %appveyor_build_folder%\7zip "C:\Program Files\7-Zip"
 - appveyor PushArtifact products.zip
 - appveyor PushArtifact newtonsoft.json.6.0.3.nupkg
 - ps: Set-Content -Path "$env:appveyor_build_folder\packages\ts.txt" -Value "$(get-date)"
