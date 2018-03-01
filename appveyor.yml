@@ -3,6 +3,7 @@ version: 1.0.{build}
 build_cloud: GCE
 
 init:
+- appveyor version
 - ps: |
     Update-AppveyorBuild -Message "Google storage and cache (with nuget 6.0.3)"
     Start-sleep -s 1
