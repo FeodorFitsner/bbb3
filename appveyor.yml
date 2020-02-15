@@ -20,19 +20,10 @@ cache:
 install:
 - nuget restore packages.config -PackagesDirectory packages
 
-build_script:
-- ps: Start-FileDownload https://www.appveyor.com/downloads/Appveyor.NUnitLogger.zip
-- ps: Start-FileDownload 'https://nodejs.org/dist/v6.5.0/node-v6.5.0-darwin-x64.tar.gz' -FileName wxWidgets.7z
-- ps: Push-AppveyorArtifact wxWidgets.7z
-- fsutil file createnew bigfile 2300000000
-
 test_script:
 - appveyor PushArtifact products.zip
 - appveyor PushArtifact newtonsoft.json.6.0.3.nupkg
 - ps: Set-Content -Path "$env:appveyor_build_folder\packages\ts.txt" -Value "$(get-date)"
 
 artifacts:
-- path: 7zip
-- path: node.zip
 - path: README.md
-- path: bigfile
