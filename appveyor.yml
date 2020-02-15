@@ -20,6 +20,8 @@ cache:
 install:
 - nuget restore packages.config -PackagesDirectory packages
 
+build: off
+
 test_script:
 - appveyor PushArtifact products.zip
 - appveyor PushArtifact newtonsoft.json.6.0.3.nupkg
